@@ -1,0 +1,18 @@
+# Other notebooks (not main)
+hydralora.ipynb
+hydralora-paper-implementation.ipynb
+understanding-and-implementing-hydralora-efficient.ipynb
+
+# Config (optional, not needed for main notebook)
+configs/
+
+# Checkpoints
+*.pt
+*.pth
+*.safetensors
+
+# Python
+__pycache__/
+.venv/
+venv/
+.env

@@ -1,0 +1,7 @@
+# HydraLoRA Fine-tuning
+torch>=2.0.0
+transformers>=4.35.0
+accelerate>=0.25.0
+datasets>=2.14.0
+sentencepiece
+pyarrow>=14.0.0
