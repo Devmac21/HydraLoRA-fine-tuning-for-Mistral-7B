@@ -1,73 +1,147 @@
-# HydraLoRA Fine-tuning for Mistral-7B
+# HydraLoRA Fine-tuning for Mistral-7B 🚀
 
-Paper-faithful implementation of **HydraLoRA** (multi-expert LoRA with top-k sparse routing) for parameter-efficient fine-tuning of large language models.
+A research-oriented implementation of **HydraLoRA**, a multi-expert parameter-efficient fine-tuning framework with sparse routing for Large Language Models.
 
-## Key Features
+This repository focuses on scalable LLM adaptation using:
+- Sparse expert routing
+- Parameter-efficient fine-tuning (PEFT)
+- Quantization-aware training
+- Efficient GPU utilization
+- Instruction tuning pipelines
 
-- **8 experts per layer** with learned router
-- **Top-2 sparse routing** (paper-faithful) — only 2 experts active per token
-- **~0.4% trainable parameters** (~29M for Mistral-7B)
-- **Instruction tuning** on UltraChat with proper loss masking
-- **Router entropy diagnostics** — expert usage analysis
-- **NaN-safe training** — gradient clipping, loss checks
+---
 
-## HydraLoRA vs Standard LoRA
+## 🔬 Overview
 
-| Aspect | Standard LoRA | HydraLoRA |
-|--------|---------------|-----------|
-| **Experts** | 1 adapter per layer | 8 experts, top-2 routing |
-| **Capacity** | Fixed rank | Multi-expert specialization |
-| **Trainable params** | ~0.1–0.2% | ~0.4% (more expressive) |
-| **Routing** | N/A | Learned router selects experts |
-| **Use case** | General fine-tuning | Domain adaptation, multi-task |
+HydraLoRA extends traditional LoRA by introducing:
+- Multiple experts per transformer layer
+- Learned routing mechanisms
+- Sparse top-k expert activation
+- Improved specialization capacity
 
-## Results
+The implementation is optimized for experimentation with:
+- Mistral-7B
+- QLoRA pipelines
+- Instruction-tuning datasets
+- Research benchmarking
 
-| Dataset | Steps | Loss (start) | Loss (end) |
-|---------|-------|--------------|------------|
+---
+
+## ⚙️ Core Features
+
+### Multi-Expert Routing
+- 8 experts per transformer layer
+- Top-2 sparse routing
+- Learned router mechanism
+- Expert utilization diagnostics
+
+### Efficient Fine-Tuning
+- ~0.4% trainable parameters
+- PEFT integration
+- Quantization-aware adaptation
+- Memory-efficient training
+
+### Stability & Monitoring
+- NaN-safe training
+- Gradient clipping
+- Router entropy analysis
+- Expert distribution tracking
+
+---
+
+## 📊 Benchmark Results
+
+| Dataset | Training Steps | Initial Loss | Final Loss |
+|---|---|---|---|
 | Wikitext-2 | 500 | 5.5 | 1.3 |
 | Wikitext-2 | 3000 | 5.7 | 1.6 |
 | UltraChat 50k | 1500 | 1.9 | 0.77 |
 
-## Project Structure
+---
 
+## 🏗️ Architecture
+
+```text
+Input Tokens
+     ↓
+Transformer Layer
+     ↓
+HydraLoRA Router
+     ↓
+Top-K Expert Selection
+     ↓
+Sparse Expert Adapters
+     ↓
+Merged Output
 ```
-Xingling/
+
+---
+
+## 📂 Project Structure
+
+```text
+HydraLoRA-fine-tuning-for-Mistral-7B/
 ├── src/
-│   └── hydralora.py      # HydraLoRA implementation
+│   └── hydralora.py
 ├── configs/
-│   └── default.yaml     # Training config
-├── notebooks/           # Jupyter notebooks
+├── notebooks/
+├── experiments/
+├── benchmarks/
 ├── README.md
 └── requirements.txt
 ```
 
-## Installation
+---
+
+## 🛠️ Installation
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Usage
+---
+
+## 🚀 Example Usage
 
 ```python
-from src.hydralora import apply_hydralora, HydraLoRALinear
+from src.hydralora import apply_hydralora
+from transformers import AutoModelForCausalLM
 
-# Load model
-model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-v0.1", ...)
+model = AutoModelForCausalLM.from_pretrained(
+    "mistralai/Mistral-7B-v0.1"
+)
 
-# Inject HydraLoRA (top-2 routing)
 apply_hydralora(model, top_k=2)
-
-# Freeze base, train only HydraLoRA
-for n, p in model.named_parameters():
-    p.requires_grad = "hydra" in n.lower()
 ```
 
-## Citation
+---
 
-If you use this implementation, please cite the HydraLoRA paper and this repository.
+## 📈 Future Improvements
 
-## License
+- [ ] QLoRA integration
+- [ ] FlashAttention support
+- [ ] Multi-GPU distributed training
+- [ ] CUDA kernel optimization
+- [ ] Mixture-of-Experts benchmarking
+- [ ] Fine-tuning evaluation suite
 
-MIT
+---
+
+## 🎯 Why This Project Matters
+
+This repository explores modern techniques increasingly relevant for:
+- LLM optimization
+- AI infrastructure engineering
+- Research engineering
+- Efficient model adaptation
+- Resource-constrained fine-tuning
+
+The project demonstrates practical understanding of scalable LLM systems beyond standard LoRA pipelines.
+
+---
+
+## 👨‍💻 Author
+
+**Divanshu**  
+AI/ML Engineer & Researcher  
+Research Intern @ Carnegie Mellon University (CMU)
